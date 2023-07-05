@@ -22,33 +22,34 @@ class ChatField extends GetView<RuangObrolanController> {
                 ),
                 elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0, right: 8),
                   child: TextField(
                     decoration: InputDecoration(
+                      hintText: "masukkan pesan disini",
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                print("object");
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                elevation: 4,
-                child: IconButton(
-                  onPressed: null,
-                  icon: Icon(
+            Card(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              elevation: 4,
+              child: InkWell(
+                onTap: () {},
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Icon(
                     Icons.mic,
                     color: Reusable.textColor,
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
