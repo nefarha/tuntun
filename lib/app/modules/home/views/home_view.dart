@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/app/modules/home/views/home_item.dart';
 
 import '../controllers/home_controller.dart';
@@ -10,9 +11,8 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text("Obrolan"),
+      appBar: Reusable.customAppbar(
+        title: "Obrolan",
         actions: [
           IconButton(
             onPressed: () {
@@ -21,34 +21,24 @@ class HomeView extends GetView<HomeController> {
                 delegate: controller.customSearchDelegate,
               );
             },
-            icon: Icon(Icons.search),
+            icon: Icon(
+              Icons.search,
+              color: Reusable.actionColor,
+              size: 30,
+            ),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.person,
+              size: 30,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
       body: Stack(
         children: [
-          // Background Halaman Utama
-          Container(
-            width: Get.width,
-            height: Get.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.blue,
-                  Colors.blue.shade100,
-                  Colors.blue.shade100,
-                  Colors.blue.shade100,
-                  Colors.blue.shade100,
-                ],
-              ),
-            ),
-          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: HomeItem(),

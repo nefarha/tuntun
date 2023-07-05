@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tun_tun/app/data/reusable.dart';
+import 'package:tun_tun/app/modules/RuangObrolan/views/ruang_obrolan_item.dart';
+import 'package:tun_tun/app/modules/RuangObrolan/views/ruang_obrolan_text.dart';
 
 import '../controllers/ruang_obrolan_controller.dart';
 
@@ -9,15 +12,14 @@ class RuangObrolanView extends GetView<RuangObrolanController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('RuangObrolanView'),
-        centerTitle: true,
+      appBar: Reusable.customAppbar(
+        title: "Nama User",
       ),
-      body: const Center(
-        child: Text(
-          'RuangObrolanView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Column(
+        children: [
+          Expanded(child: RuangObrolanItem()),
+          ChatField(),
+        ],
       ),
     );
   }

@@ -14,14 +14,14 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-    ),
+        name: _Paths.HOME,
+        page: () => const HomeView(),
+        binding: HomeBinding(),
+        transition: Transition.leftToRight),
     GetPage(
-      name: _Paths.RUANG_OBROLAN,
-      page: () => const RuangObrolanView(),
-      binding: RuangObrolanBinding(),
-    ),
+        name: _Paths.RUANG_OBROLAN,
+        page: () => const RuangObrolanView(),
+        binding: RuangObrolanBinding(),
+        transition: Transition.rightToLeft),
   ];
 }
