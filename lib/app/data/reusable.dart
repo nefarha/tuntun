@@ -21,4 +21,19 @@ class Reusable {
       actions: actions,
     );
   }
+
+  static Widget backgroundGradient(double width, double height) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [
+            backgroundColor,
+            surfaceColor,
+          ],
+        ),
+      ),
+    );
+  }
 }
