@@ -30,21 +30,14 @@ class HomeView extends GetView<HomeController> {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.person,
+              Icons.camera_alt_outlined,
               size: 30,
               color: Colors.grey,
             ),
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: HomeItem(),
-          )
-        ],
-      ),
+      body: HomeItem(),
     );
   }
 }

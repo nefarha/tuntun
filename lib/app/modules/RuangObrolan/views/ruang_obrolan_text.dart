@@ -44,7 +44,7 @@ class ChatField extends GetView<RuangObrolanController> {
                   width: 50,
                   height: 50,
                   child: Icon(
-                    Icons.mic,
+                    Icons.send,
                     color: Reusable.textColor,
                   ),
                 ),
