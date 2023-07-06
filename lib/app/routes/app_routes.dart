@@ -7,6 +7,7 @@ abstract class Routes {
   static const RUANG_OBROLAN = _Paths.RUANG_OBROLAN;
   static const BOARDING = _Paths.BOARDING;
   static const REGISTER = _Paths.REGISTER;
+  static const INPUT_NAME = _Paths.INPUT_NAME;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const RUANG_OBROLAN = '/ruang-obrolan';
   static const BOARDING = '/boarding';
   static const REGISTER = '/register';
+  static const INPUT_NAME = '/input-name';
 }

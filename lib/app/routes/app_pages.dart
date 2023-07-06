@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
+import 'package:tun_tun/app/data/middlewares/inputNameHome.dart';
 
 import '../data/middlewares/authHomeMiddleware.dart';
 import '../modules/Boarding/bindings/boarding_binding.dart';
 import '../modules/Boarding/views/boarding_view.dart';
+import '../modules/InputName/bindings/input_name_binding.dart';
+import '../modules/InputName/views/input_name_view.dart';
 import '../modules/Register/bindings/register_binding.dart';
 import '../modules/Register/views/register_view.dart';
 import '../modules/RuangObrolan/bindings/ruang_obrolan_binding.dart';
@@ -41,6 +44,11 @@ class AppPages {
       name: _Paths.REGISTER,
       page: () => const RegisterView(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.INPUT_NAME,
+      page: () => const InputNameView(),
+      binding: InputNameBinding(),
     ),
   ];
 }

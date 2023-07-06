@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/app/modules/home/views/home_item.dart';
+import 'package:tun_tun/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -28,7 +29,9 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print(controller.authC.currentUser.value!.displayName);
+            },
             icon: Icon(
               Icons.camera_alt_outlined,
               size: 30,

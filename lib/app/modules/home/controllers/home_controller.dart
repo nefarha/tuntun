@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tun_tun/app/controllers/auth_controller.dart';
 
 class HomeController extends GetxController {
+  final authC = AuthController.instance;
   final customSearchDelegate = CustomSearch.instance;
 }
 

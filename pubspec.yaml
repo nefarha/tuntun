@@ -12,6 +12,7 @@ dependencies:
   firebase_core: 2.14.0
   cloud_firestore: 4.8.2
   firebase_storage: 11.2.4
+  firebase_auth: 4.6.3
   flutter: 
     sdk: flutter
 
@@ -21,8 +22,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  uses-material-design: true
-  assets:
+  assets: 
     - assets/icon/deaf.png
     - assets/icon/blind.png
+  uses-material-design: true
 

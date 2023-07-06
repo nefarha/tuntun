@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/app/modules/Boarding/controllers/boarding_controller.dart';
+import 'package:tun_tun/app/routes/app_pages.dart';
 
 class DeafBoarding extends GetView<BoardingController> {
   const DeafBoarding({super.key});
@@ -43,7 +44,9 @@ class DeafBoarding extends GetView<BoardingController> {
             elevation: 6,
             backgroundColor: Reusable.actionColor,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(Routes.REGISTER, arguments: "TUNARUNGU");
+          },
           child: Text(
             "Masuk disini",
             style: TextStyle(color: Reusable.textColor),

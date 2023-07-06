@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class Reusable {
   static var backgroundColor = const Color(0xffdbebff);
@@ -34,6 +35,44 @@ class Reusable {
           ],
         ),
       ),
+    );
+  }
+
+  static Widget customTextfield(
+      {required String hintText,
+      required TextEditingController controller,
+      required TextInputType inputType,
+      String? Function(String? value)? validator}) {
+    return Card(
+      elevation: 6,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          validator: validator,
+          controller: controller,
+          keyboardType: inputType,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hintText,
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Future<String?> askingSMSCode() async {
+    TextEditingController smscontroller = TextEditingController();
+    return await Get.defaultDialog(
+      barrierDismissible: false,
+      title: "OTP",
+      content: customTextfield(
+        controller: smscontroller,
+        hintText: 'enter otp',
+        inputType: TextInputType.number,
+      ),
+      onConfirm: () {
+        Get.back(result: smscontroller.text);
+      },
     );
   }
 }

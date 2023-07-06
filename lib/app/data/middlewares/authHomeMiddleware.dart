@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tun_tun/app/controllers/auth_controller.dart';
 import 'package:tun_tun/app/routes/app_pages.dart';
 
 class AuthHomeMiddlewares extends GetMiddleware {
-  bool isAuth = false;
+  final authC = AuthController.instance;
   @override
   int? priority = 0;
 
@@ -11,9 +12,13 @@ class AuthHomeMiddlewares extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    // TODO: implement redirect
-    if (isAuth == false) {
+    print("nama: ${authC.currentUser.value!.displayName!.isEmpty}");
+
+    if (authC.currentUser.value == null) {
       return RouteSettings(name: Routes.BOARDING);
+    }
+    if (authC.currentUser.value!.displayName!.isEmpty) {
+      return RouteSettings(name: Routes.INPUT_NAME);
     }
   }
 }

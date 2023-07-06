@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tun_tun/app/controllers/auth_controller.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/firebase_options.dart';
 
@@ -15,7 +16,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final authC = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
