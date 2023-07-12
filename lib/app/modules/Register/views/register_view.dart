@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tun_tun/app/data/models/userModel.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 
 import '../controllers/register_controller.dart';
@@ -56,8 +57,10 @@ class RegisterView extends GetView<RegisterController> {
                           number = number.replaceFirst(RegExp(r'0'), '+62');
                         }
 
-                        await controller.authC
-                            .phoneAuthSignIn(phoneNumber: number);
+                        await controller.authC.phoneAuthSignIn(
+                            phoneNumber: number,
+                            status: controller.selectedStatus,
+                            token: controller.deviceToken.value!);
                       }
                     },
                     child: Text(

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tun_tun/app/data/middlewares/inputNameHome.dart';
 
 import '../data/middlewares/authHomeMiddleware.dart';
 import '../modules/Boarding/bindings/boarding_binding.dart';

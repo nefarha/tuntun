@@ -4,30 +4,30 @@ import 'dart:convert';
 class UserModel {
   String id;
   String name;
-  String email;
-  String user_id;
-  String? phone;
+  String phone;
+  String token;
+  String status;
   UserModel({
     required this.id,
     required this.name,
-    required this.email,
-    required this.user_id,
-    this.phone,
+    required this.phone,
+    required this.token,
+    required this.status,
   });
 
   UserModel copyWith({
     String? id,
     String? name,
-    String? email,
-    String? user_id,
     String? phone,
+    String? token,
+    String? status,
   }) {
     return UserModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      email: email ?? this.email,
-      user_id: user_id ?? this.user_id,
       phone: phone ?? this.phone,
+      token: token ?? this.token,
+      status: status ?? this.status,
     );
   }
 
@@ -35,9 +35,9 @@ class UserModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'email': email,
-      'user_id': user_id,
       'phone': phone,
+      'token': token,
+      'status': status,
     };
   }
 
@@ -45,9 +45,9 @@ class UserModel {
     return UserModel(
       id: map['id'] as String,
       name: map['name'] as String,
-      email: map['email'] as String,
-      user_id: map['user_id'] as String,
-      phone: map['phone'] != null ? map['phone'] as String : null,
+      phone: map['phone'] as String,
+      token: map['token'] as String,
+      status: map['status'] as String,
     );
   }
 
@@ -58,7 +58,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, email: $email, user_id: $user_id, phone: $phone)';
+    return 'UserModel(id: $id, name: $name, phone: $phone, token: $token, status: $status)';
   }
 
   @override
@@ -67,17 +67,17 @@ class UserModel {
 
     return other.id == id &&
         other.name == name &&
-        other.email == email &&
-        other.user_id == user_id &&
-        other.phone == phone;
+        other.phone == phone &&
+        other.token == token &&
+        other.status == status;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
-        email.hashCode ^
-        user_id.hashCode ^
-        phone.hashCode;
+        phone.hashCode ^
+        token.hashCode ^
+        status.hashCode;
   }
 }

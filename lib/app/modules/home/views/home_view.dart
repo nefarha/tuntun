@@ -30,7 +30,7 @@ class HomeView extends GetView<HomeController> {
           ),
           IconButton(
             onPressed: () {
-              print(controller.authC.currentUser.value!.displayName);
+              print(controller.authC.logout());
             },
             icon: Icon(
               Icons.camera_alt_outlined,

@@ -33,7 +33,7 @@ class BlindBoarding extends GetView<BoardingController> {
           height: 50,
         ),
         Image(
-          height: 180,
+          height: 130,
           image: AssetImage("assets/icon/blind.png"),
         ),
         SizedBox(

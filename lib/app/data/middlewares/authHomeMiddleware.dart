@@ -12,12 +12,10 @@ class AuthHomeMiddlewares extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    print("nama: ${authC.currentUser.value!.displayName!.isEmpty}");
-
     if (authC.currentUser.value == null) {
       return RouteSettings(name: Routes.BOARDING);
     }
-    if (authC.currentUser.value!.displayName!.isEmpty) {
+    if (authC.currentUser.value!.displayName == null) {
       return RouteSettings(name: Routes.INPUT_NAME);
     }
   }

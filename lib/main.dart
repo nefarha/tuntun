@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tun_tun/app/controllers/auth_controller.dart';
+import 'package:tun_tun/app/controllers/database_controller.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/firebase_options.dart';
 
@@ -18,8 +19,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
+  final dataC = Get.put(DatabaseController());
   final authC = Get.put(AuthController());
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
