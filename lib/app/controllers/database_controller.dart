@@ -19,4 +19,16 @@ class DatabaseController extends GetxController {
   Future updateUser({required UserModel model}) async {
     _userStore.doc(model.id).update(model.toMap());
   }
+
+  Future updateName({required String id, required String name}) async {
+    _userStore.doc(id).update({"name": name});
+  }
+
+  Future updateTokenUser({required String id, required String token}) async {
+    _userStore.doc(id).update({"token": token});
+  }
+
+  Stream<UserModel> readUser({required String id}) {
+    return _userStore.doc(id).snapshots().map((event) => event.data()!);
+  }
 }

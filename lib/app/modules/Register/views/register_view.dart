@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tun_tun/app/data/models/userModel.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 
 import '../controllers/register_controller.dart';

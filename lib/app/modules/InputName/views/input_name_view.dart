@@ -53,15 +53,9 @@ class InputNameView extends GetView<InputNameController> {
                         controller.authC
                             .updateName(nama: controller.nameController.text);
 
-                        UserModel model = UserModel(
+                        controller.dataC.updateName(
                             id: controller.authC.currentUser.value!.uid,
-                            name: controller.nameController.text,
-                            phone: controller
-                                .authC.currentUser.value!.phoneNumber!,
-                            token: controller.deviceToken.value!,
-                            status: controller.authC.currentUser.value!.uid);
-
-                        controller.dataC.updateUser(model: model);
+                            name: controller.nameController.text);
                       }
                     },
                     child: Text(

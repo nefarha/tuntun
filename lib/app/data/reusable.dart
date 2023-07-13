@@ -6,13 +6,17 @@ class Reusable {
   static var backgroundColor = const Color(0xffdbebff);
   static var surfaceColor = Color.fromARGB(255, 194, 208, 226);
   static var textColor = const Color(0xff1f4b7d);
-  static var actionColor = const Color(0xfff4c34f);
+  static var actionColor = Color.fromARGB(255, 211, 169, 70);
   static var gradientIner = Color.fromARGB(255, 154, 164, 175);
   static var gradientOuter = Color.fromARGB(255, 169, 182, 196);
 
   static AppBar customAppbar(
-      {String title = '', List<Widget>? actions, double height = 80}) {
+      {String title = '',
+      List<Widget>? actions,
+      double height = 80,
+      Widget? leading}) {
     return AppBar(
+      leading: leading,
       toolbarHeight: height,
       elevation: 0,
       title: Text(

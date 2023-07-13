@@ -8,6 +8,7 @@ abstract class Routes {
   static const BOARDING = _Paths.BOARDING;
   static const REGISTER = _Paths.REGISTER;
   static const INPUT_NAME = _Paths.INPUT_NAME;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const BOARDING = '/boarding';
   static const REGISTER = '/register';
   static const INPUT_NAME = '/input-name';
+  static const PROFILE = '/profile';
 }

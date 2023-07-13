@@ -17,7 +17,9 @@ class RuangObrolanView extends GetView<RuangObrolanController> {
       ),
       body: Column(
         children: [
-          Expanded(child: RuangObrolanItem()),
+          Expanded(
+            child: RuangObrolanItem(),
+          ),
           ChatField(),
         ],
       ),

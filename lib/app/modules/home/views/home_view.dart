@@ -13,6 +13,12 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Reusable.customAppbar(
+        leading: IconButton(
+          onPressed: () {
+            Get.toNamed(Routes.PROFILE);
+          },
+          icon: Icon(Icons.person),
+        ),
         title: "Obrolan",
         actions: [
           IconButton(
