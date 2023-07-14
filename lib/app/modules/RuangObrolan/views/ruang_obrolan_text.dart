@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tun_tun/app/data/models/chatModel.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/app/modules/RuangObrolan/controllers/ruang_obrolan_controller.dart';
 
@@ -24,6 +25,7 @@ class ChatField extends GetView<RuangObrolanController> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8),
                   child: TextField(
+                    controller: controller.chatTextController,
                     decoration: InputDecoration(
                       hintText: "masukkan pesan disini",
                       border: InputBorder.none,
@@ -39,7 +41,20 @@ class ChatField extends GetView<RuangObrolanController> {
               ),
               elevation: 4,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  if (controller.chatTextController.text.isNotEmpty) {
+                    ChatModel chatModel = ChatModel(
+                      text: controller.chatTextController.text,
+                      sender_account: controller.userC.user.value!,
+                      recevier_account: controller.receiver,
+                      send_at: DateTime.now(),
+                      isRead: false,
+                    );
+                    controller.postChat(chatModel: chatModel);
+                    controller.chatTextController.clear();
+                    FocusScope.of(context).unfocus();
+                  }
+                },
                 child: SizedBox(
                   width: 50,
                   height: 50,

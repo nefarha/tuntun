@@ -25,7 +25,8 @@ class HomeView extends GetView<HomeController> {
             onPressed: () {
               showSearch(
                 context: context,
-                delegate: controller.customSearchDelegate,
+                delegate:
+                    CustomSearch(daftarPencarian: controller.daftarPencarian),
               );
             },
             icon: Icon(

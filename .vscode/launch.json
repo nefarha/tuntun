@@ -6,12 +6,7 @@
             "type": "dart",
             "deviceId": "RRCW1035KHE",
             "program": "lib/main.dart",
-            "args": [
-                "--flavor",
-                "development",
-                "--target",
-                "lib/main.dart"
-            ]
+            
         },
         {
             "name": "emu",
@@ -19,12 +14,7 @@
             "type": "dart",
             "deviceId": "emulator-5554",
             "program": "lib/main.dart",
-            "args": [
-                "--flavor",
-                "development",
-                "--target",
-                "lib/main.dart"
-            ]
+            
         },
     ],
     "compounds": [

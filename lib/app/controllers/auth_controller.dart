@@ -21,22 +21,36 @@ class AuthController extends GetxController {
     _instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (phoneAuthCredential) {
-        _instance.signInWithCredential(phoneAuthCredential).then(
-          (value) {
-            UserModel model = UserModel(
-                id: value.user!.uid,
-                name: "",
-                status: status,
-                phone: value.user!.phoneNumber!,
-                token: token);
+        // try {
+        //   _instance.signInWithCredential(phoneAuthCredential).then(
+        //     (value) {
+        //       UserModel model = UserModel(
+        //           id: value.user!.uid,
+        //           name: "",
+        //           status: status,
+        //           phone: value.user!.phoneNumber!,
+        //           token: token);
 
-            dataC.createUser(model: model);
-          },
-        );
-        Get.offAllNamed(Routes.HOME);
+        //       dataC.createUser(model: model);
+        //     },
+        //   );
+        //   Get.offAllNamed(Routes.HOME);
+        // } on FirebaseAuthException catch (e) {
+        //   if (e.code == "session-expired") {
+        //     DialogModel.ErrorDialog("SILAHKAN KIRIM ULANG KDOE");
+        //   }
+        // }
       },
-      verificationFailed: (error) {
-        DialogModel.ErrorDialog("Terjadi kesalahan");
+      verificationFailed: (FirebaseAuthException error) {
+        if (error.code == "too-many-requests") {
+          DialogModel.ErrorDialog(
+              "Terlalu sering mengirim code, Device ditangguhkan beberapa saat, Silahkan coba beberapa saat");
+        } else if (error.code == 'invalid-phone-number') {
+          DialogModel.ErrorDialog("Nomor telephone salah");
+        } else if (error.code == "session-expired") {
+          DialogModel.ErrorDialog("SILAHKAN KIRIM ULANG KDOE");
+        } else
+          DialogModel.ErrorDialog("Terjadi kesalahan");
       },
       codeSent: (verificationId, forceResendingToken) async {
         String? smsCode = await Reusable.askingSMSCode();
@@ -58,7 +72,7 @@ class AuthController extends GetxController {
                 dataC.createUser(model: model);
               },
             );
-            ;
+
             Get.offAllNamed(Routes.HOME);
           } on FirebaseAuthException catch (e) {
             if (e.code == "invalid-verification-code") {
@@ -82,6 +96,11 @@ class AuthController extends GetxController {
     await _instance.currentUser!.updateDisplayName(nama);
     currentUser.bindStream(_instance.userChanges());
     Get.offAllNamed(Routes.HOME);
+  }
+
+  Future changeName({required String nama}) async {
+    await _instance.currentUser!.updateDisplayName(nama);
+    currentUser.bindStream(_instance.userChanges());
   }
 
   @override

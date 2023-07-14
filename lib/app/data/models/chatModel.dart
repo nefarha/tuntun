@@ -4,54 +4,54 @@ import 'dart:convert';
 import 'package:tun_tun/app/data/models/userModel.dart';
 
 class ChatModel {
-  String id;
   String text;
   UserModel sender_account;
   UserModel recevier_account;
   DateTime send_at;
+  bool isRead;
   ChatModel({
-    required this.id,
     required this.text,
     required this.sender_account,
     required this.recevier_account,
     required this.send_at,
+    required this.isRead,
   });
 
   ChatModel copyWith({
-    String? id,
     String? text,
     UserModel? sender_account,
     UserModel? recevier_account,
     DateTime? send_at,
+    bool? isRead,
   }) {
     return ChatModel(
-      id: id ?? this.id,
       text: text ?? this.text,
       sender_account: sender_account ?? this.sender_account,
       recevier_account: recevier_account ?? this.recevier_account,
       send_at: send_at ?? this.send_at,
+      isRead: isRead ?? this.isRead,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'text': text,
       'sender_account': sender_account.toMap(),
       'recevier_account': recevier_account.toMap(),
       'send_at': send_at.millisecondsSinceEpoch,
+      'isRead': isRead,
     };
   }
 
   factory ChatModel.fromMap(Map<String, dynamic> map) {
     return ChatModel(
-      id: map['id'] as String,
       text: map['text'] as String,
       sender_account:
           UserModel.fromMap(map['sender_account'] as Map<String, dynamic>),
       recevier_account:
           UserModel.fromMap(map['recevier_account'] as Map<String, dynamic>),
       send_at: DateTime.fromMillisecondsSinceEpoch(map['send_at'] as int),
+      isRead: map['isRead'] as bool,
     );
   }
 
@@ -62,26 +62,26 @@ class ChatModel {
 
   @override
   String toString() {
-    return 'ChatModel(id: $id, text: $text, sender_account: $sender_account, recevier_account: $recevier_account, send_at: $send_at)';
+    return 'ChatModel(text: $text, sender_account: $sender_account, recevier_account: $recevier_account, send_at: $send_at, isRead: $isRead)';
   }
 
   @override
   bool operator ==(covariant ChatModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.text == text &&
+    return other.text == text &&
         other.sender_account == sender_account &&
         other.recevier_account == recevier_account &&
-        other.send_at == send_at;
+        other.send_at == send_at &&
+        other.isRead == isRead;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        text.hashCode ^
+    return text.hashCode ^
         sender_account.hashCode ^
         recevier_account.hashCode ^
-        send_at.hashCode;
+        send_at.hashCode ^
+        isRead.hashCode;
   }
 }

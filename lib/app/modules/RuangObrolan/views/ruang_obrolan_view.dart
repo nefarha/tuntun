@@ -13,7 +13,7 @@ class RuangObrolanView extends GetView<RuangObrolanController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Reusable.customAppbar(
-        title: "Nama User",
+        title: controller.receiver.name,
       ),
       body: Column(
         children: [

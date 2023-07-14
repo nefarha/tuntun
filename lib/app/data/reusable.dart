@@ -79,4 +79,18 @@ class Reusable {
       },
     );
   }
+
+  static changeName(
+      {required Function()? onConfirm,
+      required TextEditingController namaController}) async {
+    await Get.defaultDialog(
+      title: "Ubah Nama",
+      content: customTextfield(
+        controller: namaController,
+        hintText: 'masukkan nama',
+        inputType: TextInputType.text,
+      ),
+      onConfirm: onConfirm,
+    );
+  }
 }

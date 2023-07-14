@@ -1,14 +1,20 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tun_tun/app/controllers/auth_controller.dart';
+import 'package:tun_tun/app/controllers/database_controller.dart';
 import 'package:tun_tun/app/controllers/user_controller.dart';
+import 'package:tun_tun/app/data/reusable.dart';
 
 class ProfileController extends GetxController {
   final userC = UserController.instance;
   final authC = AuthController.instance;
+  final dataC = DatabaseController.instance;
 
-  Map<String, dynamic> get userMap => {
-        "nama": userC.user.value!.name,
-        "phone": userC.user.value!.phone,
-        "status": userC.user.value!.status,
-      };
+  Map<String, dynamic> get userMap =>
+      {"phone": userC.user.value!.phone, "status": userC.user.value!.status};
+
+  void changeName(TextEditingController namaController) async {
+    await authC.changeName(nama: namaController.text);
+    await dataC.updateName(id: userC.user.value!.id, name: namaController.text);
+  }
 }
