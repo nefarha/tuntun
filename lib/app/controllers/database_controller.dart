@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tun_tun/app/data/models/chatModel.dart';
@@ -94,6 +96,10 @@ class DatabaseController extends GetxController {
               )
               .toList(),
         );
+  }
+
+  Future updateRoom({required ChatRoom roomModel}) async {
+    _chatRoomStore.doc(roomModel.id).update(roomModel.toMap());
   }
 
   /// Chat Session

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tun_tun/app/data/models/chatModel.dart';
+import 'package:tun_tun/app/data/models/chatRoomModel.dart';
 import 'package:tun_tun/app/data/reusable.dart';
 import 'package:tun_tun/app/modules/RuangObrolan/controllers/ruang_obrolan_controller.dart';
 
@@ -43,6 +44,16 @@ class ChatField extends GetView<RuangObrolanController> {
               child: InkWell(
                 onTap: () {
                   if (controller.chatTextController.text.isNotEmpty) {
+                    // Buat chat room model baru untuk update
+                    ChatRoom newRoomModel = controller.roomModel.copyWith(
+                      lastSender: {
+                        "sender": controller.userC.user.value!.id,
+                        "text": controller.chatTextController.text,
+                      },
+                      newMessage: true,
+                    );
+
+                    // Buat chat model untuk dimasukkan ke database
                     ChatModel chatModel = ChatModel(
                       text: controller.chatTextController.text,
                       sender_account: controller.userC.user.value!,
@@ -50,11 +61,20 @@ class ChatField extends GetView<RuangObrolanController> {
                       send_at: DateTime.now(),
                       isRead: false,
                     );
+
+                    // Upload chat ke database
                     controller.postChat(chatModel: chatModel);
+
+                    // Update room di database
+                    controller.dataC.updateRoom(roomModel: newRoomModel);
+
+                    // Push notification ke target device
                     controller.fcmProvider.sendChat(
                         title: controller.userC.user.value!.name,
                         body: controller.chatTextController.text,
                         fcmToken: controller.receiver.token);
+
+                    // Membersihkan isi textfield
                     controller.chatTextController.clear();
                     FocusScope.of(context).unfocus();
                   }

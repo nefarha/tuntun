@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tun_tun/app/controllers/auth_controller.dart';
 import 'package:tun_tun/app/controllers/database_controller.dart';
 import 'package:tun_tun/app/controllers/user_controller.dart';
-import 'package:tun_tun/app/data/models/chatModel.dart';
 import 'package:tun_tun/app/data/models/chatRoomModel.dart';
 import 'package:tun_tun/app/data/models/userModel.dart';
 import 'package:tun_tun/app/routes/app_pages.dart';
@@ -13,17 +14,22 @@ class HomeController extends GetxController with StateMixin<List<ChatRoom>> {
   final dataC = DatabaseController.instance;
   final userC = UserController.instance;
 
+  late StreamSubscription messageStream;
+
   RxList<UserModel> daftarPencarian = RxList.empty();
   RxList<ChatRoom> daftarRuangObrolan = RxList.empty();
 
   @override
   void onInit() {
     daftarPencarian.bindStream(dataC.readAllUser());
+
     daftarRuangObrolan.bindStream(
         dataC.readRoom(id: authC.currentUser.value!.uid).asyncMap((event) {
       change(event, status: RxStatus.success());
+
       return event;
     }));
+
     super.onInit();
   }
 }
@@ -92,6 +98,7 @@ class CustomSearch extends SearchDelegate {
                                 (homeC.userC.user.value!.status == "TUNARUNGU")
                                     ? homeC.userC.user.value!
                                     : user,
+                            newMessage: false,
                           ),
                           user,
                         ],
@@ -134,17 +141,17 @@ class CustomSearch extends SearchDelegate {
                         Routes.RUANG_OBROLAN,
                         arguments: [
                           ChatRoom(
-                            id: (user.status == "TUNANETRA")
-                                ? "${homeC.userC.user.value!.id}and${user.id}"
-                                : "${user.id}and${homeC.userC.user.value!.id}",
-                            tunatera: (user.status == "TUNANETRA")
-                                ? user
-                                : homeC.userC.user.value!,
-                            tunarungu:
-                                (homeC.userC.user.value!.status == "TUNARUNGU")
-                                    ? homeC.userC.user.value!
-                                    : user,
-                          ),
+                              id: (user.status == "TUNANETRA")
+                                  ? "${homeC.userC.user.value!.id}and${user.id}"
+                                  : "${user.id}and${homeC.userC.user.value!.id}",
+                              tunatera: (user.status == "TUNANETRA")
+                                  ? user
+                                  : homeC.userC.user.value!,
+                              tunarungu: (homeC.userC.user.value!.status ==
+                                      "TUNARUNGU")
+                                  ? homeC.userC.user.value!
+                                  : user,
+                              newMessage: false),
                           user,
                         ],
                       );
