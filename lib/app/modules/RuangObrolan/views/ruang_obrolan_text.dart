@@ -51,6 +51,10 @@ class ChatField extends GetView<RuangObrolanController> {
                       isRead: false,
                     );
                     controller.postChat(chatModel: chatModel);
+                    controller.fcmProvider.sendChat(
+                        title: controller.userC.user.value!.name,
+                        body: controller.chatTextController.text,
+                        fcmToken: controller.receiver.token);
                     controller.chatTextController.clear();
                     FocusScope.of(context).unfocus();
                   }
