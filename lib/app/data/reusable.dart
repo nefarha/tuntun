@@ -19,9 +19,13 @@ class Reusable {
       leading: leading,
       toolbarHeight: height,
       elevation: 0,
-      title: Text(
-        title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+      title: Semantics(
+        hidden: true,
+        excludeSemantics: true,
+        child: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        ),
       ),
       actions: actions,
     );

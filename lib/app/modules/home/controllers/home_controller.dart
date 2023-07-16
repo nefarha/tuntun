@@ -38,7 +38,8 @@ class CustomSearch extends SearchDelegate {
   List<UserModel> daftarPencarian;
   HomeController homeC = Get.find<HomeController>();
 
-  CustomSearch({required this.daftarPencarian});
+  CustomSearch({required this.daftarPencarian})
+      : super(searchFieldLabel: "Cari pengguna");
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -48,7 +49,8 @@ class CustomSearch extends SearchDelegate {
         onPressed: () {
           query = "";
         },
-        icon: Icon(Icons.search_off),
+        icon: Semantics(
+            label: "hapus isi pencarian", child: Icon(Icons.search_off)),
       )
     ];
   }
@@ -57,10 +59,14 @@ class CustomSearch extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     // ini untuk tombol yang ada di sebelah kiri
     return IconButton(
-        onPressed: () {
-          Get.back();
-        },
-        icon: Icon(Icons.arrow_back));
+      onPressed: () {
+        Get.back();
+      },
+      icon: Semantics(
+        label: "Kembali ke halaman sebelumnya",
+        child: Icon(Icons.arrow_back),
+      ),
+    );
   }
 
   @override
@@ -135,29 +141,33 @@ class CustomSearch extends SearchDelegate {
                 .where((element) =>
                     element.status != homeC.userC.user.value!.status)
                 .map(
-                  (user) => ListTile(
-                    onTap: () async {
-                      Get.toNamed(
-                        Routes.RUANG_OBROLAN,
-                        arguments: [
-                          ChatRoom(
-                              id: (user.status == "TUNANETRA")
-                                  ? "${homeC.userC.user.value!.id}and${user.id}"
-                                  : "${user.id}and${homeC.userC.user.value!.id}",
-                              tunatera: (user.status == "TUNANETRA")
-                                  ? user
-                                  : homeC.userC.user.value!,
-                              tunarungu: (homeC.userC.user.value!.status ==
-                                      "TUNARUNGU")
-                                  ? homeC.userC.user.value!
-                                  : user,
-                              newMessage: false),
-                          user,
-                        ],
-                      );
-                    },
-                    title: Text(user.name),
-                    subtitle: Text(user.phone),
+                  (user) => Semantics(
+                    label: "Pengguna ",
+                    child: ListTile(
+                      onTap: () async {
+                        Get.toNamed(
+                          Routes.RUANG_OBROLAN,
+                          arguments: [
+                            ChatRoom(
+                                id: (user.status == "TUNANETRA")
+                                    ? "${homeC.userC.user.value!.id}and${user.id}"
+                                    : "${user.id}and${homeC.userC.user.value!.id}",
+                                tunatera: (user.status == "TUNANETRA")
+                                    ? user
+                                    : homeC.userC.user.value!,
+                                tunarungu: (homeC.userC.user.value!.status ==
+                                        "TUNARUNGU")
+                                    ? homeC.userC.user.value!
+                                    : user,
+                                newMessage: false),
+                            user,
+                          ],
+                        );
+                      },
+                      title: Text(user.name),
+                      subtitle: Semantics(
+                          excludeSemantics: true, child: Text(user.phone)),
+                    ),
                   ),
                 )
                 .toList(),

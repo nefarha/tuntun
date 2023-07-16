@@ -34,11 +34,14 @@ class RuangObrolanItem extends GetView<RuangObrolanController> {
           groupSeparatorBuilder: (value) => Align(
             alignment: Alignment.topCenter,
             child: Card(
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                margin: EdgeInsets.all(8),
-                child: Text(
-                  DateFormat(DateFormat.YEAR_MONTH_WEEKDAY_DAY).format(value),
+              child: Semantics(
+                hidden: true,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  margin: EdgeInsets.all(8),
+                  child: Text(
+                    DateFormat(DateFormat.YEAR_MONTH_WEEKDAY_DAY).format(value),
+                  ),
                 ),
               ),
             ),

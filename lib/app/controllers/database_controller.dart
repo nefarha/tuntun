@@ -37,6 +37,10 @@ class DatabaseController extends GetxController {
         await _userStore.doc(model.id).get().then((value) => value.exists);
     if (!userDatabase) {
       _userStore.doc(model.id).set(model);
+    } else {
+      _userStore.doc(model.id).update(
+        {"token": model.token},
+      );
     }
   }
 

@@ -32,9 +32,12 @@ class DeafBoarding extends GetView<BoardingController> {
         SizedBox(
           height: 80,
         ),
-        Image(
-          height: 100,
-          image: AssetImage("assets/icon/deaf.png"),
+        Semantics(
+          excludeSemantics: true,
+          child: Image(
+            height: 100,
+            image: AssetImage("assets/icon/deaf.png"),
+          ),
         ),
         SizedBox(
           height: 80,

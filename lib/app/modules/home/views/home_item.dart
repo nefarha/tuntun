@@ -14,47 +14,49 @@ class HomeItem extends GetView<HomeController> {
       (state) => ListView(
         children: state!
             .map(
-              (ruangObrolan) => ListTile(
-                onTap: () async {
-                  if (ruangObrolan.lastSender!["sender"] !=
-                      controller.userC.user.value!.id) {
-                    ChatRoom roomModel =
-                        ruangObrolan.copyWith(newMessage: false);
-                    controller.dataC.updateRoom(roomModel: roomModel);
-                  }
-                  Get.toNamed(
-                    Routes.RUANG_OBROLAN,
-                    arguments: [
-                      ruangObrolan,
+              (ruangObrolan) => Semantics(
+                label: "Obrolan dengan",
+                child: ListTile(
+                  onTap: () async {
+                    if (ruangObrolan.lastSender!["sender"] !=
+                        controller.userC.user.value!.id) {
+                      ChatRoom roomModel =
+                          ruangObrolan.copyWith(newMessage: false);
+                      controller.dataC.updateRoom(roomModel: roomModel);
+                    }
+                    Get.toNamed(
+                      Routes.RUANG_OBROLAN,
+                      arguments: [
+                        ruangObrolan,
+                        ruangObrolan.tunarungu.id ==
+                                controller.userC.user.value!.id
+                            ? ruangObrolan.tunatera
+                            : ruangObrolan.tunarungu
+                      ],
+                    );
+                  },
+                  
+                  title: Semantics(
+                    child: Text(
                       ruangObrolan.tunarungu.id ==
                               controller.userC.user.value!.id
-                          ? ruangObrolan.tunatera
-                          : ruangObrolan.tunarungu
-                    ],
-                  );
-                },
-                leading: CircleAvatar(
-                  radius: 40,
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
+                          ? ruangObrolan.tunatera.name
+                          : ruangObrolan.tunarungu.name,
+                    ),
                   ),
+                  subtitle: Semantics(
+                      excludeSemantics: true,
+                      child: Text(ruangObrolan.lastSender!['text'])),
+                  trailing: (ruangObrolan.newMessage)
+                      ? (ruangObrolan.lastSender!['sender'] ==
+                              controller.userC.user.value!.id)
+                          ? SizedBox()
+                          : CircleAvatar(
+                              radius: 8,
+                              backgroundColor: Reusable.actionColor,
+                            )
+                      : SizedBox(),
                 ),
-                title: Text(
-                  ruangObrolan.tunarungu.id == controller.userC.user.value!.id
-                      ? ruangObrolan.tunatera.name
-                      : ruangObrolan.tunarungu.name,
-                ),
-                subtitle: Text(ruangObrolan.lastSender!['text']),
-                trailing: (ruangObrolan.newMessage)
-                    ? (ruangObrolan.lastSender!['sender'] ==
-                            controller.userC.user.value!.id)
-                        ? SizedBox()
-                        : CircleAvatar(
-                            radius: 8,
-                            backgroundColor: Reusable.actionColor,
-                          )
-                    : SizedBox(),
               ),
             )
             .toList(),

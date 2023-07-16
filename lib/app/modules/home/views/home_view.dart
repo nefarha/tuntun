@@ -13,36 +13,40 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Reusable.customAppbar(
-        leading: IconButton(
-          onPressed: () {
-            Get.toNamed(Routes.PROFILE);
-          },
-          icon: Icon(Icons.person),
+        leading: Semantics(
+          label: "Tombol Informasi Akun",
+          child: IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.PROFILE);
+            },
+            icon: Semantics(
+              hidden: true,
+              excludeSemantics: true,
+              child: Icon(Icons.person),
+            ),
+          ),
         ),
         title: "Obrolan",
         actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate:
-                    CustomSearch(daftarPencarian: controller.daftarPencarian),
-              );
-            },
-            icon: Icon(
-              Icons.search,
-              color: Reusable.actionColor,
-              size: 30,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              print(controller.authC.logout());
-            },
-            icon: Icon(
-              Icons.camera_alt_outlined,
-              size: 30,
-              color: Colors.grey,
+          Semantics(
+            label: "Tombol pencarian, untuk mencari pengguna lain",
+            child: IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  
+                  delegate:
+                      CustomSearch(daftarPencarian: controller.daftarPencarian),
+                );
+              },
+              icon: Semantics(
+                hidden: true,
+                child: Icon(
+                  Icons.search,
+                  color: Reusable.actionColor,
+                  size: 30,
+                ),
+              ),
             ),
           ),
         ],

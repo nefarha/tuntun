@@ -17,4 +17,9 @@ class ProfileController extends GetxController {
     await authC.changeName(nama: namaController.text);
     await dataC.updateName(id: userC.user.value!.id, name: namaController.text);
   }
+
+  Future logOut() async {
+    await dataC.updateTokenUser(id: authC.currentUser.value!.uid, token: "");
+    await authC.logout();
+  }
 }

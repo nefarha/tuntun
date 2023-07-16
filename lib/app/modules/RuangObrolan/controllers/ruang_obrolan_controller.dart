@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:tun_tun/app/controllers/database_controller.dart';
 import 'package:tun_tun/app/controllers/user_controller.dart';
 import 'package:tun_tun/app/data/fcm_provider.dart';
@@ -31,8 +33,49 @@ class RuangObrolanController extends GetxController
     }
   }
 
+  // Tunanetra session
+  late SpeechToText speechToText;
+
+  var recognizedText = "".obs;
+  var isEnabled = false.obs;
+
+  void listenSound() async {
+    if (!await Permission.microphone.isGranted) {
+      Permission.microphone.request();
+    } else {
+      if (!isEnabled.value) {
+        bool availabel = await speechToText.initialize(
+          onStatus: (status) {
+            if (status == "done") {
+              isEnabled.value = false;
+              speechToText.stop();
+            }
+            if (status == "listening") {}
+            {
+              isEnabled.value == true;
+            }
+            print(status);
+          },
+          onError: (errorNotification) {
+            print(errorNotification);
+          },
+        );
+
+        if (availabel) {
+          isEnabled.value = true;
+          speechToText.listen(
+            onResult: (result) {
+              recognizedText.value = result.recognizedWords;
+            },
+          );
+        }
+      }
+    }
+  }
+
   @override
   void onInit() {
+    speechToText = SpeechToText();
     daftarChat
         .bindStream(dataC.readChat(roomModel: roomModel).asyncMap((event) {
       change(event, status: RxStatus.success());

@@ -11,7 +11,18 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Reusable.customAppbar(title: "Profil"),
+      appBar: Reusable.customAppbar(
+        title: "Profil",
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Semantics(
+            label: "Kembali ke halaman sebelumnya",
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
+      ),
       body: Column(
         children: [
           ListTile(
@@ -40,8 +51,11 @@ class ProfileView extends GetView<ProfileController> {
           ),
           ...controller.userMap.entries.map(
             (e) => ListTile(
-              title: Text(
-                e.value,
+              title: Semantics(
+                hidden: true,
+                child: Text(
+                  e.value,
+                ),
               ),
               subtitle: Text(
                 e.key,
@@ -50,10 +64,13 @@ class ProfileView extends GetView<ProfileController> {
           ),
           ListTile(
             onTap: () {
-              controller.authC.logout();
+              controller.logOut();
             },
-            title: Text(
-              "Log out",
+            title: Semantics(
+              readOnly: true,
+              child: Text(
+                "Keluar akun",
+              ),
             ),
           ),
         ],

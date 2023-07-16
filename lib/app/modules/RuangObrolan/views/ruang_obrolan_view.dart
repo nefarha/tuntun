@@ -14,6 +14,15 @@ class RuangObrolanView extends GetView<RuangObrolanController> {
     return Scaffold(
       appBar: Reusable.customAppbar(
         title: controller.receiver.name,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Semantics(
+            label: "Kembali ke halaman sebelumnya",
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
       ),
       body: Column(
         children: [

@@ -20,27 +20,7 @@ class AuthController extends GetxController {
       required String token}) async {
     _instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (phoneAuthCredential) {
-        // try {
-        //   _instance.signInWithCredential(phoneAuthCredential).then(
-        //     (value) {
-        //       UserModel model = UserModel(
-        //           id: value.user!.uid,
-        //           name: "",
-        //           status: status,
-        //           phone: value.user!.phoneNumber!,
-        //           token: token);
-
-        //       dataC.createUser(model: model);
-        //     },
-        //   );
-        //   Get.offAllNamed(Routes.HOME);
-        // } on FirebaseAuthException catch (e) {
-        //   if (e.code == "session-expired") {
-        //     DialogModel.ErrorDialog("SILAHKAN KIRIM ULANG KDOE");
-        //   }
-        // }
-      },
+      verificationCompleted: (phoneAuthCredential) {},
       verificationFailed: (FirebaseAuthException error) {
         if (error.code == "too-many-requests") {
           DialogModel.ErrorDialog(
