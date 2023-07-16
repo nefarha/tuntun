@@ -35,7 +35,14 @@ class HomeItem extends GetView<HomeController> {
                       ],
                     );
                   },
-                  
+                  leading: CircleAvatar(
+                    radius: 40,
+                    child: Icon(
+                      Icons.mail,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
                   title: Semantics(
                     child: Text(
                       ruangObrolan.tunarungu.id ==
