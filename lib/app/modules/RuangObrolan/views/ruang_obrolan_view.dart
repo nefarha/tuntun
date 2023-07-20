@@ -24,12 +24,17 @@ class RuangObrolanView extends GetView<RuangObrolanController> {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: RuangObrolanItem(),
+          Reusable.backgroundGradient(Get.width, Get.height),
+          Column(
+            children: [
+              Expanded(
+                child: RuangObrolanItem(),
+              ),
+              ChatField(),
+            ],
           ),
-          ChatField(),
         ],
       ),
     );

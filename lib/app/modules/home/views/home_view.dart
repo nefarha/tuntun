@@ -34,7 +34,6 @@ class HomeView extends GetView<HomeController> {
               onPressed: () {
                 showSearch(
                   context: context,
-                  
                   delegate:
                       CustomSearch(daftarPencarian: controller.daftarPencarian),
                 );
@@ -51,7 +50,12 @@ class HomeView extends GetView<HomeController> {
           ),
         ],
       ),
-      body: HomeItem(),
+      body: Stack(
+        children: [
+          Reusable.backgroundGradient(Get.width, Get.height),
+          HomeItem(),
+        ],
+      ),
     );
   }
 }

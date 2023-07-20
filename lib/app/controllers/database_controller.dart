@@ -102,6 +102,33 @@ class DatabaseController extends GetxController {
         );
   }
 
+  Future changeAllRoomData(
+      {required UserModel userModel, required String name}) async {
+    var daftarRuangan = await _chatRoomStore.get().then(
+          (value) => value.docs
+              .map(
+                (data) => data.data(),
+              )
+              .where(
+                (element) => element.id.contains(userModel.id),
+              )
+              .toList(),
+        );
+    daftarRuangan.forEach(
+      (element) {
+        if (userModel.status == "TUNARUNGU") {
+          UserModel model = userModel.copyWith(name: name);
+          ChatRoom newRoom = element.copyWith(tunarungu: model);
+          _chatRoomStore.doc(element.id).update(newRoom.toMap());
+        } else {
+          UserModel model = userModel.copyWith(name: name);
+          ChatRoom newRoom = element.copyWith(tunatera: model);
+          _chatRoomStore.doc(element.id).update(newRoom.toMap());
+        }
+      },
+    );
+  }
+
   Future updateRoom({required ChatRoom roomModel}) async {
     _chatRoomStore.doc(roomModel.id).update(roomModel.toMap());
   }

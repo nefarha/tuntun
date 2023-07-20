@@ -19,6 +19,7 @@ class Reusable {
       leading: leading,
       toolbarHeight: height,
       elevation: 0,
+      backgroundColor: surfaceColor,
       title: Semantics(
         hidden: true,
         excludeSemantics: true,

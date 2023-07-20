@@ -16,6 +16,8 @@ class ProfileController extends GetxController {
   void changeName(TextEditingController namaController) async {
     await authC.changeName(nama: namaController.text);
     await dataC.updateName(id: userC.user.value!.id, name: namaController.text);
+    await dataC.changeAllRoomData(
+        userModel: userC.user.value!, name: namaController.text);
   }
 
   Future logOut() async {

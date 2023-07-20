@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 class FcmProvider extends GetConnect {
   final String fcmUrl = 'https://fcm.googleapis.com/fcm/send';
 
-  final String fcmKey = "";
+  final String fcmKey =
+      'AAAAQ0OBQw0:APA91bH9ClSVDjotSGFKcnJYMWqoDYrArK3VpCKcdcv17BR9bNnqPIKL_9D2nSAyYjaNQGpQ72v9R-pOc0sN4P7PPnkAwGREt_ofAV-dxhgSqOM9fJixIsSGPib8k6UKfJBEfqQbOxiV';
+
   Future sendChat(
       {required String title,
       required String body,

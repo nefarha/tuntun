@@ -11,62 +11,68 @@ class HomeItem extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-      (state) => ListView(
-        children: state!
-            .map(
-              (ruangObrolan) => Semantics(
-                label: "Obrolan dengan",
-                child: ListTile(
-                  onTap: () async {
-                    if (ruangObrolan.lastSender!["sender"] !=
-                        controller.userC.user.value!.id) {
-                      ChatRoom roomModel =
-                          ruangObrolan.copyWith(newMessage: false);
-                      controller.dataC.updateRoom(roomModel: roomModel);
-                    }
-                    Get.toNamed(
-                      Routes.RUANG_OBROLAN,
-                      arguments: [
-                        ruangObrolan,
-                        ruangObrolan.tunarungu.id ==
-                                controller.userC.user.value!.id
-                            ? ruangObrolan.tunatera
-                            : ruangObrolan.tunarungu
-                      ],
-                    );
-                  },
-                  leading: CircleAvatar(
-                    radius: 40,
-                    child: Icon(
-                      Icons.mail,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Semantics(
-                    child: Text(
-                      ruangObrolan.tunarungu.id ==
-                              controller.userC.user.value!.id
-                          ? ruangObrolan.tunatera.name
-                          : ruangObrolan.tunarungu.name,
-                    ),
-                  ),
-                  subtitle: Semantics(
-                      excludeSemantics: true,
-                      child: Text(ruangObrolan.lastSender!['text'])),
-                  trailing: (ruangObrolan.newMessage)
-                      ? (ruangObrolan.lastSender!['sender'] ==
-                              controller.userC.user.value!.id)
-                          ? SizedBox()
-                          : CircleAvatar(
-                              radius: 8,
-                              backgroundColor: Reusable.actionColor,
-                            )
-                      : SizedBox(),
+      (state) => ListView.separated(
+        separatorBuilder: (context, index) => Divider(
+          thickness: 1,
+          color: Reusable.textColor,
+        ),
+        itemCount: state!.length,
+        itemBuilder: (context, index) {
+          ChatRoom ruangObrolan = state[index];
+          return Semantics(
+            label: "Obrolan dengan",
+            child: ListTile(
+              onTap: () async {
+                if (ruangObrolan.lastSender != null) {
+                  if (ruangObrolan.lastSender!["sender"] !=
+                      controller.userC.user.value!.id) {
+                    ChatRoom roomModel =
+                        ruangObrolan.copyWith(newMessage: false);
+                    controller.dataC.updateRoom(roomModel: roomModel);
+                  }
+                }
+                Get.toNamed(
+                  Routes.RUANG_OBROLAN,
+                  arguments: [
+                    ruangObrolan,
+                    ruangObrolan.tunarungu.id == controller.userC.user.value!.id
+                        ? ruangObrolan.tunatera
+                        : ruangObrolan.tunarungu
+                  ],
+                );
+              },
+              trailing: (ruangObrolan.lastSender != null)
+                  ? (ruangObrolan.lastSender!['sender'] !=
+                              controller.userC.user.value!.id &&
+                          ruangObrolan.newMessage == true)
+                      ? CircleAvatar(
+                          backgroundColor: Reusable.actionColor,
+                          radius: 10,
+                        )
+                      : SizedBox()
+                  : SizedBox(),
+              leading: CircleAvatar(
+                backgroundColor: Reusable.textColor,
+                radius: 40,
+                child: Icon(
+                  Icons.mail,
+                  size: 30,
+                  color: Colors.white,
                 ),
               ),
-            )
-            .toList(),
+              title: Semantics(
+                child: Text(
+                  ruangObrolan.tunarungu.id == controller.userC.user.value!.id
+                      ? ruangObrolan.tunatera.name
+                      : ruangObrolan.tunarungu.name,
+                ),
+              ),
+              subtitle: (ruangObrolan.lastSender != null)
+                  ? Text(ruangObrolan.lastSender!['text'])
+                  : SizedBox(),
+            ),
+          );
+        },
       ),
     );
   }

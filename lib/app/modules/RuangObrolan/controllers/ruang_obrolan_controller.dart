@@ -22,14 +22,14 @@ class RuangObrolanController extends GetxController
 
   RxList<ChatModel> daftarChat = RxList.empty();
 
-  Future postChat({required ChatModel chatModel}) async {
-    var isRoomExist = await dataC.checkRoomExist(id: roomModel.id);
+  Future postChat({required ChatModel chatModel, required ChatRoom room}) async {
+    var isRoomExist = await dataC.checkRoomExist(id: room.id);
 
     if (isRoomExist) {
       dataC.addChat(roomModel: roomModel, chatModel: chatModel);
     } else {
-      dataC.createChatroom(model: roomModel).then(
-          (value) => dataC.addChat(roomModel: roomModel, chatModel: chatModel));
+      dataC.createChatroom(model: room).then(
+          (value) => dataC.addChat(roomModel: room, chatModel: chatModel));
     }
   }
 

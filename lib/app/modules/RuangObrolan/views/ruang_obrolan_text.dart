@@ -68,7 +68,7 @@ class ChatField extends GetView<RuangObrolanController> {
               ),
               elevation: 4,
               child: InkWell(
-                onTap: () {
+                onTap: () async {
                   if (controller.userC.user.value!.status == "TUNARUNGU") {
                     if (controller.chatTextController.text.isNotEmpty) {
                       // Buat chat room model baru untuk update
@@ -90,10 +90,14 @@ class ChatField extends GetView<RuangObrolanController> {
                       );
 
                       // Upload chat ke database
-                      controller.postChat(chatModel: chatModel);
+                      controller.postChat(
+                          chatModel: chatModel, room: newRoomModel);
 
                       // Update room di database
-                      controller.dataC.updateRoom(roomModel: newRoomModel);
+                      if (await controller.dataC
+                          .checkRoomExist(id: newRoomModel.id)) {
+                        controller.dataC.updateRoom(roomModel: newRoomModel);
+                      }
 
                       // Push notification ke target device
                       controller.fcmProvider.sendChat(
@@ -125,10 +129,14 @@ class ChatField extends GetView<RuangObrolanController> {
                       );
 
                       // Upload chat ke database
-                      controller.postChat(chatModel: chatModel);
+                      controller.postChat(
+                          chatModel: chatModel, room: newRoomModel);
 
                       // Update room di database
-                      controller.dataC.updateRoom(roomModel: newRoomModel);
+                      if (await controller.dataC
+                          .checkRoomExist(id: newRoomModel.id)) {
+                        controller.dataC.updateRoom(roomModel: newRoomModel);
+                      }
 
                       // Push notification ke target device
                       controller.fcmProvider.sendChat(
