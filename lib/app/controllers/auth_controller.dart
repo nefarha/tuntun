@@ -20,7 +20,30 @@ class AuthController extends GetxController {
       required String token}) async {
     _instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (phoneAuthCredential) {},
+      verificationCompleted: (phoneAuthCredential) async {
+        try {
+          await _instance.signInWithCredential(phoneAuthCredential).then(
+            (value) {
+              UserModel model = UserModel(
+                  id: value.user!.uid,
+                  name: "",
+                  status: status,
+                  phone: value.user!.phoneNumber!,
+                  token: token);
+
+              dataC.createUser(model: model);
+            },
+          );
+
+          Get.offAllNamed(Routes.HOME);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == "invalid-verification-code") {
+            DialogModel.ErrorDialog("Kode verifikasi salah");
+          } else {
+            DialogModel.ErrorDialog("Terjadi suatu kesalahan");
+          }
+        }
+      },
       verificationFailed: (FirebaseAuthException error) {
         if (error.code == "too-many-requests") {
           DialogModel.ErrorDialog(
@@ -30,38 +53,15 @@ class AuthController extends GetxController {
         } else if (error.code == "session-expired") {
           DialogModel.ErrorDialog("SILAHKAN KIRIM ULANG KDOE");
         } else
-          DialogModel.ErrorDialog("Terjadi kesalahan");
+          DialogModel.ErrorDialog(error.toString());
       },
       codeSent: (verificationId, forceResendingToken) async {
-        String? smsCode = await Reusable.askingSMSCode();
-
-        if (smsCode != null) {
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-
-          try {
-            await _instance.signInWithCredential(credential).then(
-              (value) {
-                UserModel model = UserModel(
-                    id: value.user!.uid,
-                    name: "",
-                    status: status,
-                    phone: value.user!.phoneNumber!,
-                    token: token);
-
-                dataC.createUser(model: model);
-              },
-            );
-
-            Get.offAllNamed(Routes.HOME);
-          } on FirebaseAuthException catch (e) {
-            if (e.code == "invalid-verification-code") {
-              DialogModel.ErrorDialog("Kode verifikasi salah");
-            } else {
-              DialogModel.ErrorDialog("Terjadi suatu kesalahan");
-            }
-          }
-        }
+        await Reusable.askingSMSCode(
+            verificationId: verificationId,
+            instance: _instance,
+            status: status,
+            token: token,
+            dataC: dataC);
       },
       codeAutoRetrievalTimeout: (verificationId) {},
     );

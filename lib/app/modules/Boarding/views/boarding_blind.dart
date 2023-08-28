@@ -64,7 +64,30 @@ class BlindBoarding extends GetView<BoardingController> {
                 duration: Duration(milliseconds: 500), curve: Curves.linear);
           },
           child: Text("anda seorang tunarungu?"),
-        )
+        ),
+        Semantics(
+          excludeSemantics: true,
+          child: Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: GoogleFonts.kanit(color: Colors.black, fontSize: 20),
+                children: [
+                  TextSpan(text: "Bersama"),
+                  TextSpan(
+                    text: " Komunikasi",
+                    style: TextStyle(color: Reusable.textColor),
+                  ),
+                  TextSpan(text: " membangun interaksi"),
+                  TextSpan(
+                    text: " Tanpa Batas",
+                    style: TextStyle(color: Reusable.textColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -78,7 +78,7 @@ class ProfileView extends GetView<ProfileController> {
 
                   final Uri emailLaunchUri = Uri(
                     scheme: 'mailto',
-                    path: 'paangpembi@gmail.com',
+                    path: 'tuntunpkmpm@gmail.com',
                     query: encodeQueryParameters(
                       <String, String>{
                         'subject': 'Saya ingin mengadukan',

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,18 +17,19 @@ class RuangObrolanController extends GetxController
   final dataC = DatabaseController.instance;
   final fcmProvider = FcmProvider();
 
-  ChatRoom roomModel = Get.arguments[0];
+  Rx<ChatRoom> roomModel = Rx(Get.arguments[0]);
   UserModel receiver = Get.arguments[1];
 
   final chatTextController = TextEditingController();
 
   RxList<ChatModel> daftarChat = RxList.empty();
 
-  Future postChat({required ChatModel chatModel, required ChatRoom room}) async {
+  Future postChat(
+      {required ChatModel chatModel, required ChatRoom room}) async {
     var isRoomExist = await dataC.checkRoomExist(id: room.id);
 
     if (isRoomExist) {
-      dataC.addChat(roomModel: roomModel, chatModel: chatModel);
+      dataC.addChat(roomModel: roomModel.value, chatModel: chatModel);
     } else {
       dataC.createChatroom(model: room).then(
           (value) => dataC.addChat(roomModel: room, chatModel: chatModel));
@@ -74,13 +77,31 @@ class RuangObrolanController extends GetxController
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     speechToText = SpeechToText();
-    daftarChat
-        .bindStream(dataC.readChat(roomModel: roomModel).asyncMap((event) {
-      change(event, status: RxStatus.success());
-      return event;
-    }));
+    daftarChat.bindStream(
+      dataC.readChat(roomModel: roomModel.value).asyncMap(
+        (event) {
+          change(event, status: RxStatus.success());
+          return event;
+        },
+      ),
+    );
+
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    dataC.checkRoomExist(id: roomModel.value.id).then((value) {
+      roomModel.bindStream(
+        dataC.readOneRoom(roomModel: roomModel.value),
+      );
+
+      dataC.updateRoom(
+        roomModel: roomModel.value.copyWith(newMessage: false),
+      );
+    }).asStream();
+    super.onClose();
   }
 }

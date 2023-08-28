@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:tun_tun/app/controllers/database_controller.dart';
+import 'package:tun_tun/app/data/dialogModel.dart';
+import 'package:tun_tun/app/data/models/userModel.dart';
+import 'package:tun_tun/app/routes/app_pages.dart';
 
 class Reusable {
   static var backgroundColor = const Color(0xffdbebff);
@@ -56,31 +60,69 @@ class Reusable {
       elevation: 6,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          validator: validator,
-          controller: controller,
-          keyboardType: inputType,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
+        child: Semantics(
+          label: "Kotak Input",
+          child: TextFormField(
+            validator: validator,
+            controller: controller,
+            keyboardType: inputType,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: hintText,
+            ),
           ),
         ),
       ),
     );
   }
 
-  static Future<String?> askingSMSCode() async {
+  static Future<String?> askingSMSCode(
+      {required String verificationId,
+      required FirebaseAuth instance,
+      required String status,
+      required String token,
+      required DatabaseController dataC}) async {
     TextEditingController smscontroller = TextEditingController();
     return await Get.defaultDialog(
       barrierDismissible: false,
+      onCancel: () {},
       title: "OTP",
-      content: customTextfield(
-        controller: smscontroller,
-        hintText: 'enter otp',
-        inputType: TextInputType.number,
+      content: Semantics(
+        label: "otepe",
+        child: customTextfield(
+          controller: smscontroller,
+          hintText: 'masukkan kode',
+          inputType: TextInputType.number,
+        ),
       ),
-      onConfirm: () {
-        Get.back(result: smscontroller.text);
+      onConfirm: () async {
+        if (smscontroller.text.isNotEmpty) {
+          PhoneAuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: smscontroller.text);
+
+          try {
+            await instance.signInWithCredential(credential).then(
+              (value) {
+                UserModel model = UserModel(
+                    id: value.user!.uid,
+                    name: "",
+                    status: status,
+                    phone: value.user!.phoneNumber!,
+                    token: token);
+
+                dataC.createUser(model: model);
+              },
+            );
+
+            Get.offAllNamed(Routes.HOME);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == "invalid-verification-code") {
+              DialogModel.ErrorDialog("Kode verifikasi salah");
+            } else {
+              DialogModel.ErrorDialog("Terjadi suatu kesalahan");
+            }
+          }
+        }
       },
     );
   }

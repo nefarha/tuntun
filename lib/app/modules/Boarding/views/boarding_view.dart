@@ -18,7 +18,10 @@ class BoardingView extends GetView<BoardingController> {
           PageView(
             controller: controller.pageController,
             physics: NeverScrollableScrollPhysics(),
-            children: [DeafBoarding(), BlindBoarding()],
+            children: const [
+              DeafBoarding(),
+              BlindBoarding(),
+            ],
           ),
         ],
       ),

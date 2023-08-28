@@ -21,7 +21,8 @@ class ProfileController extends GetxController {
   }
 
   Future logOut() async {
-    await dataC.updateTokenUser(id: authC.currentUser.value!.uid, token: "");
-    await authC.logout();
+    await dataC
+        .updateTokenUser(id: authC.currentUser.value!.uid, token: "")
+        .whenComplete(() async => await authC.logout());
   }
 }

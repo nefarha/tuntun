@@ -19,8 +19,7 @@ class DeafBoarding extends GetView<BoardingController> {
             text: TextSpan(
               style: GoogleFonts.kanit(color: Colors.black, fontSize: 35),
               children: [
-                TextSpan(text: "Anda"),
-                TextSpan(text: " Seorang"),
+                TextSpan(text: "Anda Seorang"),
                 TextSpan(
                   text: " Tunarungu?",
                   style: TextStyle(color: Reusable.textColor),
@@ -64,7 +63,30 @@ class DeafBoarding extends GetView<BoardingController> {
                 duration: Duration(milliseconds: 500), curve: Curves.linear);
           },
           child: Text("anda seorang tunanetra?"),
-        )
+        ),
+        Semantics(
+          excludeSemantics: true,
+          child: Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: GoogleFonts.kanit(color: Colors.black, fontSize: 20),
+                children: [
+                  TextSpan(text: "Bersama"),
+                  TextSpan(
+                    text: " Komunikasi",
+                    style: TextStyle(color: Reusable.textColor),
+                  ),
+                  TextSpan(text: " membangun interaksi"),
+                  TextSpan(
+                    text: " Tanpa Batas",
+                    style: TextStyle(color: Reusable.textColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

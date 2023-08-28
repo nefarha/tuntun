@@ -72,7 +72,8 @@ class ChatField extends GetView<RuangObrolanController> {
                   if (controller.userC.user.value!.status == "TUNARUNGU") {
                     if (controller.chatTextController.text.isNotEmpty) {
                       // Buat chat room model baru untuk update
-                      ChatRoom newRoomModel = controller.roomModel.copyWith(
+                      ChatRoom newRoomModel =
+                          controller.roomModel.value.copyWith(
                         lastSender: {
                           "sender": controller.userC.user.value!.id,
                           "text": controller.chatTextController.text,
@@ -111,7 +112,8 @@ class ChatField extends GetView<RuangObrolanController> {
                     }
                   } else {
                     if (controller.recognizedText.value.isNotEmpty) {
-                      ChatRoom newRoomModel = controller.roomModel.copyWith(
+                      ChatRoom newRoomModel =
+                          controller.roomModel.value.copyWith(
                         lastSender: {
                           "sender": controller.userC.user.value!.id,
                           "text": controller.recognizedText.value,

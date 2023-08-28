@@ -129,6 +129,13 @@ class DatabaseController extends GetxController {
     );
   }
 
+  Stream<ChatRoom> readOneRoom({required ChatRoom roomModel}) {
+    return _chatRoomStore
+        .doc(roomModel.id)
+        .snapshots()
+        .map((event) => event.data()!);
+  }
+
   Future updateRoom({required ChatRoom roomModel}) async {
     _chatRoomStore.doc(roomModel.id).update(roomModel.toMap());
   }
