@@ -4,7 +4,7 @@ class FcmProvider extends GetConnect {
   final String fcmUrl = 'https://fcm.googleapis.com/fcm/send';
 
   final String fcmKey =
-      'AAAAcXFZANY:APA91bFv7yHgbQMFtx8JqKbzn8JkIUzkn1N5iSBicu6eL0q2miX5qei78zYs0J2vdFwSj1tZFDU-2MVqmrguDANowACSgNLrWZ6-PavTmb4d7goqgZPHc1KiF-00-MFmioUaM74J636k';
+      "";
 
   Future sendChat(
       {required String title,
