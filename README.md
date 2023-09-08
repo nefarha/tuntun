@@ -1,16 +1,29 @@
-# tun_tun
 
-A new Flutter project.
+# Blind Deaf Chat App
 
-## Getting Started
+Aplikasi chattingan sederhana antara Tunarungu dan Tunanetra.
 
-This project is a starting point for a Flutter application.
+# Tunarungu
+Untuk sisi Tunarungu, tidak ada hal yang spesial, seperti apkikasi chattingan pada umumnya.
+Bisa mencari pengguna lain yang bukan Tunarungu.
 
-A few resources to get you started if this is your first Flutter project:
+# Tunanetra
+Untuk sisi Tunanetra, bisa memanfaatkan fitur TalkBack di android, sisi semantic sudah diberikan.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Untuk mengirim pesan, mengandalkan Speech-To-Text.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Bisa mencari pengguna lain yang bukan Tunanetra
+
+# Autentikasi
+Autentikasi dilakukan menggunakan nomor telepon saja.
+
+# PENGATURAN
+diharapkan atur firebase pribadi untuk menggunakan aplikasi, mohon letak google_services.json
+Fitur yang dipakai: 
+1. Autentikasi ( phone number )
+2. Firestore
+3. Firebase Cloud Messaging
+
+Harap setting firebase pribadi anda.
+
+Di file fcm provider, harap masukkan ApiKey kalian dari firebase
